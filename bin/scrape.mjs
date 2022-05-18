@@ -2,6 +2,8 @@
 
 import { JSDOM, ResourceLoader, VirtualConsole } from 'jsdom'
 import fs from 'fs'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
 
 async function main() {
   const virtualConsole = new VirtualConsole()
@@ -25,7 +27,8 @@ async function main() {
   })
 
   const questions = Array.from(questionNodes).map(extractQuestion)
-  fs.writeFileSync('questions.json', JSON.stringify(questions, null, 2))
+  const __dirname = dirname(fileURLToPath(import.meta.url))
+  fs.writeFileSync(join(__dirname, '..', 'src', 'data', 'questions.json'), JSON.stringify(questions, null, 2))
 }
 
 main()
