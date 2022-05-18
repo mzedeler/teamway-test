@@ -1,10 +1,12 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
-    /* ... */
+    public: '/',
+    src: '/dist',
   },
   plugins: [
-    /* ... */
+    '@snowpack/plugin-postcss',
+    '@snowpack/plugin-react-refresh',
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
@@ -18,7 +20,7 @@ export default {
     /* ... */
   },
   devOptions: {
-    /* ... */
+    tailwindConfig: './tailwind.config.js',
   },
   buildOptions: {
     /* ... */
