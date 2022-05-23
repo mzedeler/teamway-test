@@ -4,12 +4,6 @@ import Steps from './components/Steps'
 import Question from './components/Question'
 import questions from '../../data/questions.json'
 
-const notificationMethods = [
-  { id: 'email', title: 'Email' },
-  { id: 'sms', title: 'Phone (SMS)' },
-  { id: 'push', title: 'Push notification' },
-]
-
 export default function Questionaire({ params: { questionIndex }, navigators }) {
   const handleNext = useCallback(
     () => questionIndex < questions.length -1 && setCurrentQuestion(questionIndex + 1),
