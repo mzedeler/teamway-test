@@ -5,7 +5,6 @@ import Title from '../../components/Title'
 
 export default ({ onNext }) => (
   <Page>
-    <Title>Hello</Title>
     <Main>
       <div className="relative bg-gray-800 rounded-lg">
         <div className="rounded-l-lg h-56 bg-indigo-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2">

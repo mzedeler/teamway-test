@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import Page from '../../components/Page'
-import Card from '../../components/Card'
 import Steps from './components/Steps'
+import Question from './components/Question'
+import questions from '../../data/questions.json'
 
 const notificationMethods = [
   { id: 'email', title: 'Email' },
@@ -9,33 +10,20 @@ const notificationMethods = [
   { id: 'push', title: 'Push notification' },
 ]
 
-export default ({ onNext }) => (
-  <Page>
-    <Steps type="Question" />
-    <Card>
-      <div onClick={onNext}>
-        <label className="text-base font-medium text-gray-900">Notifications</label>
-        <p className="text-sm leading-5 text-gray-500">How do you prefer to receive notifications?</p>
-        <fieldset className="mt-4">
-          <legend className="sr-only">Notification method</legend>
-          <div className="space-y-4">
-            {notificationMethods.map((notificationMethod) => (
-              <div key={notificationMethod.id} className="flex items-center">
-                <input
-                  id={notificationMethod.id}
-                  name="notification-method"
-                  type="radio"
-                  defaultChecked={notificationMethod.id === 'email'}
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                />
-                <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
-                  {notificationMethod.title}
-                </label>
-              </div>
-            ))}
-          </div>
-        </fieldset>
-      </div>
-    </Card>
-  </Page>
-)
+export default ({ onNext }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const handleNext = useCallback(
+    () => currentQuestion < questions.length -1 && setCurrentQuestion(currentQuestion + 1),
+    [currentQuestion]
+  )
+  const handleSetCurrentQuestion = useCallback(
+    (i) => console.log(i) || i >= 0 && i < questions.length && setCurrentQuestion(i),
+    []
+  )
+  return (
+    <Page>
+      <Steps type="Question" onChange={handleSetCurrentQuestion} />
+      <Question />
+    </Page>
+  )
+}
