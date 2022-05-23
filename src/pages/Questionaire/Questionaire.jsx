@@ -4,7 +4,10 @@ import Steps from './components/Steps'
 import Question from './components/Question'
 import questions from '../../data/questions.json'
 
-export default function Questionaire({ params: { questionIndex }, navigators }) {
+console.log(questions)
+
+export default function Questionaire({ params: { questionIndex: questionIndexStr }, navigators }) {
+  const questionIndex = parseInt(questionIndexStr, 10)
   const handleNext = useCallback(
     () => questionIndex < questions.length -1 && setCurrentQuestion(questionIndex + 1),
     [questionIndex]
@@ -17,7 +20,7 @@ export default function Questionaire({ params: { questionIndex }, navigators }) 
 
   return (
     <Page>
-      <Steps type="Question" onChange={handleSetCurrentQuestion} />
+      <Steps type="Question" onChange={handleSetCurrentQuestion} questions={questions} questionIndex={questionIndex} />
       <Question />
     </Page>
   )

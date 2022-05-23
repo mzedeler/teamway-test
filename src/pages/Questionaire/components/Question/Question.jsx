@@ -7,7 +7,7 @@ const notificationMethods = [
   { id: 'push', title: 'Push notification' },
 ]
 
-export default ({ onNext }) => (
+export default ({ onNext, questionIndex }) => (
   <Card>
     <div onClick={onNext}>
       <label className="text-base font-medium text-gray-900">Notifications</label>
