@@ -10,16 +10,17 @@ const notificationMethods = [
   { id: 'push', title: 'Push notification' },
 ]
 
-export default ({ onNext }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0)
+export default function Questionaire({ params: { questionIndex }, navigators }) {
   const handleNext = useCallback(
-    () => currentQuestion < questions.length -1 && setCurrentQuestion(currentQuestion + 1),
-    [currentQuestion]
+    () => questionIndex < questions.length -1 && setCurrentQuestion(questionIndex + 1),
+    [questionIndex]
   )
+
   const handleSetCurrentQuestion = useCallback(
-    (i) => console.log(i) || i >= 0 && i < questions.length && setCurrentQuestion(i),
+    (i) => console.log(i) || i >= 0 && i < questions.length && navigators.questionaire({ questionIndex: i }),
     []
   )
+
   return (
     <Page>
       <Steps type="Question" onChange={handleSetCurrentQuestion} />
