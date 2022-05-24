@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Card from '../../../../components/Card'
+import AnswersContext from '../../../../contexts/AnswersContext'
 
 const notificationMethods = [
   { id: 'email', title: 'Email' },
@@ -7,30 +8,49 @@ const notificationMethods = [
   { id: 'push', title: 'Push notification' },
 ]
 
-export default ({ onNext, questionIndex }) => (
-  <Card>
-    <div onClick={onNext}>
-      <label className="text-base font-medium text-gray-900">Notifications</label>
-      <p className="text-sm leading-5 text-gray-500">How do you prefer to receive notifications?</p>
-      <fieldset className="mt-4">
-        <legend className="sr-only">Notification method</legend>
-        <div className="space-y-4">
-          {notificationMethods.map((notificationMethod) => (
-            <div key={notificationMethod.id} className="flex items-center">
-              <input
-                id={notificationMethod.id}
-                name="notification-method"
-                type="radio"
-                defaultChecked={notificationMethod.id === 'email'}
-                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-              />
-              <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
-                {notificationMethod.title}
-              </label>
-            </div>
-          ))}
+const Question = ({ onNext, question }) => {
+  const { answers, setAnswers } = useContext(AnswersContext)
+
+  const handleSetAnswer = (index) => setAnswers({...answers, [question.id]: index })
+
+  return (
+    <Card>
+      <div>
+        <label className="text-base font-medium text-gray-900">{question.question}</label>
+        <fieldset className="mt-4">
+          <legend className="sr-only">Answers</legend>
+          <div className="space-y-4">
+            {question.answers.map((answer) => (
+              <div key={answer.index} className="flex items-center">
+                <input
+                  id={answer.index}
+                  checked={answers[question.id] === answer.index}
+                  onChange={() => handleSetAnswer(answer.index)}
+                  name="answer"
+                  type="radio"
+                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                />
+                <label htmlFor={answer.index} className="ml-3 block text-sm font-medium text-gray-700">
+                  {answer.text}
+                </label>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+        <div className="mt-4">
+          <div className="inline-flex rounded-md shadow">
+            <a
+              onClick={(e) => { e.preventDefault(); onNext() }}
+              href="#"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50"
+            >
+              Next
+            </a>
+          </div>
         </div>
-      </fieldset>
-    </div>
-  </Card>
-)
+      </div>
+    </Card>
+  )
+}
+
+export default Question

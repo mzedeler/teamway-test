@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Landing from '../../pages/Landing'
 import Questionaire from '../../pages/Questionaire/Questionaire'
 import UniversalRouter from 'universal-router/sync'
 import { createBrowserHistory } from 'history'
+import AnswersContext from '../../contexts/AnswersContext'
 
 const landingDestination = path => ({
   key: 'landing',
@@ -31,5 +32,7 @@ const history = createBrowserHistory()
 export default function App() {
   const [location, setLocation] = useState(history.location)
   useEffect(() => history.listen(({ location }) => setLocation(location)), [])
-  return router.resolve(location)
+  const page = router.resolve(location)
+  const [answers, setAnswers] = useState({})
+  return <AnswersContext.Provider value={{ answers, setAnswers }}>{page}</AnswersContext.Provider>
  }
