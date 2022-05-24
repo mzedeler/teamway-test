@@ -3,21 +3,15 @@ import Page from '../../components/Page'
 import Steps from './components/Steps'
 import Question from './components/Question'
 import questions from '../../data/questions.json'
+import handleNavigateQuestion  from './utils/handleNavigateQuestion'
 
-const handleNavigateQuestion = ({ questionIndex, nextQuestionIndex, navigators }) => {
-  if (nextQuestionIndex >= questions.length) {
-    // Move to result page
-  } else {
-    if (nextQuestionIndex >= -1 && nextQuestionIndex <= questionIndex + 1) {
-      navigators.questionaire({questionIndex: nextQuestionIndex })
-    }
-  }
-}
+console.log(handleNavigateQuestion)
 
 export default function Questionaire({ params: { questionIndex: questionIndexStr }, navigators }) {
   const questionIndex = parseInt(questionIndexStr, 10)
   const handleNext = useCallback(
     () => handleNavigateQuestion({
+      questions,
       questionIndex,
       navigators,
       nextQuestionIndex: questionIndex + 1,
@@ -27,6 +21,7 @@ export default function Questionaire({ params: { questionIndex: questionIndexStr
 
   const handleSetCurrentQuestion = useCallback(
     (nextQuestionIndex) => handleNavigateQuestion({
+      questions,
       questionIndex,
       navigators,
       nextQuestionIndex,

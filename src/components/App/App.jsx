@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Landing from '../../pages/Landing'
-import Questionaire from '../../pages/Questionaire/Questionaire'
+import Questionaire from '../../pages/Questionaire'
+import Result from '../../pages/Result'
 import UniversalRouter from 'universal-router/sync'
 import { createBrowserHistory } from 'history'
 import AnswersContext from '../../contexts/AnswersContext'
@@ -9,7 +10,7 @@ const landingDestination = path => ({
   key: 'landing',
   path,
   action: (context, params) => <Landing context={context} params={params} navigators={navigators} />,
-  navigator: () => history.push('/')
+  navigator: () => history.push(path)
 })
 
 const questionaireDestination = path => ({
@@ -19,9 +20,17 @@ const questionaireDestination = path => ({
   navigator: ({ questionIndex = 0 } = {}) => history.push(`${path}/${questionIndex}`)
 })
 
+const resultDestination = path => ({
+  key: 'result',
+  path,
+  action: (context, params) => <Result context={context} params={params} navigators={navigators} />,
+  navigator: () => history.push(path)
+})
+
 const routes = [
   landingDestination(''),
-  questionaireDestination('/question')
+  questionaireDestination('/question'),
+  resultDestination('/result'),
 ]
 
 const navigators = {}
